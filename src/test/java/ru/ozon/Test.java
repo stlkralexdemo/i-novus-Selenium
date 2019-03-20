@@ -3,9 +3,11 @@ package ru.ozon;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
-import pages.Util;
+import util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -74,12 +76,12 @@ public class Test {
     }
 
     @org.testng.annotations.Test(priority = 7)
-    public void back(){
+    public void back() {
         driver.navigate().back();
     }
 
     @org.testng.annotations.Test(priority = 8)
-    public void randomClickNext(){
+    public void randomClickNext() {
         String xpath = "//div[@index = '" + Util.rand(amount) + "']/a";
         driver.findElementByXPath(xpath).click();
     }
@@ -96,41 +98,56 @@ public class Test {
     @org.testng.annotations.Test(priority = 10)
     public void inBasketSecond() {
         driver.findElementByCssSelector(".bSaleBlockButton").click();
+
     }
 
     @org.testng.annotations.Test(priority = 11)
-    public void check(){
+    public void check() {
 
         String attribute = driver.findElementByXPath("//div[@class = 'bCount' and @data-count]").getAttribute("data-count");
         System.out.println(attribute);
+
+        Assert.assertEquals("1", attribute);
     }
 
-//    @org.testng.annotations.Test(priority = 11)
-//    public void check(){
-//
-//    }
+    @org.testng.annotations.Test(priority = 12)
+    public void toBasket() {
+        driver.findElementByCssSelector("div.eMyOzon_Item:nth-child(4) > a:nth-child(1)").click();
+    }
 
-//    @org.testng.annotations.Test
-//    public void list() {
-//
-//        String text = driver.findElementByCssSelector(".category-count").getText();
-//        System.out.println("количество товаров на странице " + text);
-//
-//    }
-//
-//    @org.testng.annotations.Test
-//    public void amount() {
-//
-//        List<WebElement> amount = driver.findElementsByXPath("//a[@class='grid-snippet__react-link link']");
-//
-//        System.out.println(amount.size());
-//    }
+    @org.testng.annotations.Test(priority = 13)
+    public void checkBasket() {
+        List<WebElement> elements = driver.findElementsByXPath("//div/a[@data-test-id = 'cart-item-title']");
+        List<String> list = new ArrayList<String>();
+        for (WebElement element : elements) {
+            list.add(element.getText());
+        }
+        Assert.assertEquals(nameFirst, list.get(1));
+        Assert.assertEquals(nameSecond, list.get(0));
+
+        String priceInBasket = driver.findElementByCssSelector("div.row:nth-child(3) > div:nth-child(2) > span:nth-child(1) > span:nth-child(1) > span:nth-child(1)").getText();
+        System.out.println(Util.parseNum(priceInBasket));
+        System.out.println(Util.parseNum(priceFirst) + Util.parseNum(priceSecond));
+
+        Assert.assertEquals(Util.parseNum(priceFirst) + Util.parseNum(priceSecond), Util.parseNum(priceInBasket));
+    }
+
+    @org.testng.annotations.Test(priority = 14)
+    public void clearBasket() {
+        driver.findElementByCssSelector("button.header-btn:nth-child(2)").click();
+        driver.findElementByCssSelector(".blue").click();
+    }
+
+    @org.testng.annotations.Test(priority = 15)
+    public void nextCheckBasket() {
+        String text = driver.findElementByXPath("//div[@class = 'empty-cart']/h1[text()]").getText();
+        Assert.assertEquals("Корзина пуста", text);
+    }
 
 
-//    @After
-//    public void afterAll() {
-//
-//        driver.quit();
-//    }
+    @org.testng.annotations.Test(priority = 16)
+    public void afterAll() {
+        driver.quit();
+    }
 }
 
