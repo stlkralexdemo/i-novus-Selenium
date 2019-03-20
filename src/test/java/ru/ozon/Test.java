@@ -126,8 +126,6 @@ public class Test {
         Assert.assertEquals(nameSecond, list.get(0));
 
         String priceInBasket = driver.findElementByCssSelector("div.row:nth-child(3) > div:nth-child(2) > span:nth-child(1) > span:nth-child(1) > span:nth-child(1)").getText();
-        System.out.println(Util.parseNum(priceInBasket));
-        System.out.println(Util.parseNum(priceFirst) + Util.parseNum(priceSecond));
 
         Assert.assertEquals(Util.parseNum(priceFirst) + Util.parseNum(priceSecond), Util.parseNum(priceInBasket));
     }
