@@ -179,6 +179,7 @@ public class Test {
     public void check() {
 
         driver.navigate().back();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         String attribute = driver.findElementByCssSelector(".count").getText();
 
         Assert.assertEquals(attribute, "2");
