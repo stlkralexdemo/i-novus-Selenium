@@ -82,7 +82,11 @@ public class Test {
         driver.findElementByXPath(xpath).click();
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElementByCssSelector(".close-icon").click();
+
+        if (driver.findElementByCssSelector(".close-icon").isDisplayed()) ;
+        {
+            driver.findElementByCssSelector(".close-icon").click();
+        }
     }
 
     /**
@@ -116,6 +120,7 @@ public class Test {
         System.out.println("this first" + checkName);
         Assert.assertEquals(checkName, firstName);
     }
+
     /**
      * Дважды жмём кнопку назад в браузере.
      */
@@ -134,6 +139,9 @@ public class Test {
     public void secondRnd() {
 
         secondRandomNumber = Util.rand(amount);
+        if (secondRandomNumber == firstRandomNumber) {
+            secondRnd();
+        }
     }
 
     @org.testng.annotations.Test(priority = 13, description = "Выбрать товар под номером, полученным в п.12. ( Перейти на страницу товара )")
