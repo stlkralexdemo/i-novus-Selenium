@@ -83,7 +83,7 @@ public class Test {
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-        if (driver.findElementByCssSelector(".close-icon").isDisplayed()) ;
+        if (driver.findElementByCssSelector(".close-icon").isEnabled()) ;
         {
             driver.findElementByCssSelector(".close-icon").click();
         }
