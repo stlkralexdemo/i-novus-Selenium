@@ -177,8 +177,8 @@ public class Test {
             "количество товаров в корзине )")
     public void check() {
 
-        driver.navigate().back();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.navigate().back();
         String attribute = driver.findElementByCssSelector(".count").getText();
 
         Assert.assertEquals(attribute, "2");
