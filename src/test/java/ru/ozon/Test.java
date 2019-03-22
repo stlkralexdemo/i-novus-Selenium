@@ -117,7 +117,6 @@ public class Test {
 
         driver.findElementByCssSelector("a.bSaleBlockButton").click();
         String checkName = driver.findElementByCssSelector(".title").getText();
-        System.out.println("this first" + checkName);
         Assert.assertEquals(checkName, firstName);
     }
 
