@@ -1,6 +1,7 @@
 package ru.ozon;
 
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
@@ -81,12 +82,15 @@ public class Test {
         String xpath = "//div[@index = '" + firstRandomNumber + "']/a";
         driver.findElementByXPath(xpath).click();
 
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
-        if (driver.findElementByCssSelector(".close-icon").isEnabled()) ;
-        {
+        try {
             driver.findElementByCssSelector(".close-icon").click();
+        } catch (NoSuchElementException e) {
+            System.out.println("окно не выскочило");
         }
+
+
     }
 
     /**
